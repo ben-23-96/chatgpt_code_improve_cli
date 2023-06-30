@@ -1,11 +1,13 @@
 from redbaron import RedBaron
 from os import makedirs
+from argparse import ArgumentError
 
 class CodeParser:
     def __init__(self, filename):
         self.filename = filename
         self.function_names_list = []
         self.original_functions_code_list = []
+        self.function_not_found_list = []
 
     def get_target_functions_code(self, function_names: list):
         with open(self.filename, "r") as source_code:
@@ -13,10 +15,17 @@ class CodeParser:
     
         for function_name in function_names:
             function_node = red.find('def', function_name)
+            if not function_node:
+                self.function_not_found_list.append(function_name)
+                continue
             self.function_names_list.append(function_node.name)
             self.original_functions_code_list.append(function_node.dumps())
+
+        if len(self.original_functions_code_list) == 0:
+            function_names_str = (', ').join(function_names)
+            raise Exception(f'Unable to find any of the given functions in {self.filename}, the functions you provided were {function_names_str}')
     
-        return self.original_functions_code_list
+        return self.original_functions_code_list, self.function_not_found_list
     
     def replace_target_functions_with_new_functions(self, new_functions: list):
         with open(self.filename, 'r') as source_code:

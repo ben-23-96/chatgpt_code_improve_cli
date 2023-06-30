@@ -10,7 +10,7 @@ def main():
 
     parser.add_argument('filename', type=str,
                         help='The filename of the file containing the code to be used.')
-    parser.add_argument('--target-functions', type=str, nargs='+', default=[],
+    parser.add_argument('--target-functions', type=str, nargs='*', default=[],
                         help='A space-separated list of function names to be targeted for refactoring. ## CLASSES ##')
     parser.add_argument('--refactor', action='store_true',
                         help='If set, refactor the code.')
@@ -27,23 +27,28 @@ def main():
 
     args = parser.parse_args()
 
-    argument_valiadator = ArgumentValidator(args)
-    
-    try:
-        argument_valiadator.validate()
-    except Exception as e:
-        print(e)
-        return
-
-    ## Print the arguments for demonstration
     print(json.dumps(vars(args), indent=2))
+
+    argument_valiadator = ArgumentValidator(args)
 
     code_parser = CodeParser(filename=args.filename)
 
     gpt_request = GptRequest(gpt_4=args.gpt_4)
     
-    functions_code_list = code_parser.get_target_functions_code(function_names=args.target_functions)
-    
+    try:
+        argument_valiadator.validate()
+
+        functions_code_list, functions_not_found_list = code_parser.get_target_functions_code(function_names=args.target_functions)
+    except Exception as e:
+        print(e)
+        return
+
+    if len(functions_not_found_list) > 0:
+        functions_not_found_str = (', ').join(functions_not_found_list)
+        user_continue = input(f'In {args.filename} unable to find functions: {functions_not_found_str}.\n Do you wish to continue with the functions that were found successfully ? y/n  ')
+        if user_continue != 'y':
+            return
+
     gpt_request.create_prompts(functions=functions_code_list, refactor=args.refactor, comments=args.comments, docstrings=args.docstrings, error_handling=args.error_handling)
     
     new_functions = gpt_request.make_GPT_requests()
