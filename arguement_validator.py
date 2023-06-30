@@ -1,4 +1,4 @@
-from argparse import ArgumentTypeError, ArgumentError
+from argparse import ArgumentTypeError
 
 class ArgumentValidator:
     def __init__(self, args):
@@ -7,7 +7,7 @@ class ArgumentValidator:
     def check_file_type(self):
         file_type = self.args.filename.split('.')[-1]
         if file_type not in ['py', 'js']:
-            raise ArgumentError('Invalid file type. Only Python (.py) and JavaScript (.js) files are allowed.')
+            raise ArgumentTypeError('Invalid file type. Only Python (.py) and JavaScript (.js) files are allowed.')
 
     def check_review_and_edit(self):
         if not self.args.create_review_file and not self.args.edit_code_in_file:
