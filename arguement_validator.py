@@ -29,6 +29,11 @@ class ArgumentValidator:
     def check_temp_range(self):
         if self.args.temp < 0 or self.args.temp > 1:
             raise ArgumentTypeError("temp must be between 0 and 1.")
+        
+    def check_method_in_correct_format (self):
+        for method in self.args.target_methods:
+            if not method[0].isupper() or '.' not in method:
+                raise ArgumentTypeError(f"error with method formating for {method}, must be ClassName.method")
 
     def validate(self):
         self.check_file_type()
@@ -37,3 +42,4 @@ class ArgumentValidator:
         self.check_one_of_refactor_or_comments_or_docstrings_or_error_handling_provided()
         self.check_no_class_and_methods_clash()
         self.check_temp_range()
+        self.check_method_in_correct_format()
