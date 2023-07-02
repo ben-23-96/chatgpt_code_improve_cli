@@ -7,6 +7,7 @@ name = "pypi"
 aiohttp = "*"
 markdown-it-py = "*"
 redbaron = "*"
+tqdm = "*"
 
 [dev-packages]
 
