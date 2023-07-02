@@ -5,8 +5,9 @@ from os import environ
 from markdown_it import MarkdownIt
 
 class GptRequest:
-    def __init__(self, gpt_4: bool = False):
+    def __init__(self, gpt_4: bool = False, temp: float = 0.4):
         self.gpt_4 = gpt_4
+        self.temp = temp
         self.prompts = []
         self.GPT_API_KEY = environ.get("GPT_API_KEY")
         self.edited_functions = []
@@ -63,7 +64,7 @@ class GptRequest:
         data = {
             'model': model,
             'messages': prompt_message,
-            'temperature': 0.5
+            'temperature': self.temp
         }
     
         async with session.post(url, headers=headers, data=json.dumps(data)) as resp:
