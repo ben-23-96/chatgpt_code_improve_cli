@@ -28,7 +28,7 @@ def main():
     parser.add_argument('--gpt-4', action='store_true',
                         help='If set, GPT-4 will be used instead of the default GPT-3.')
     parser.add_argument('--temp', type=float, default=0.4, help='Affects the randomness of the output. Higher more creative lower more structured. Must be between 1 and 0. Default 0.4.')
-    parser.add_argument('--create-review-file', action='store_true', help='If set, creates a file {function_name}.py in a folder gpt_function_review containing the newly edited function code and the old function code. Allowing you to review before replacing the code in the actual file. Either this or edit-code-in-file must be set. Both can be set.')
+    parser.add_argument('--create-review-file', action='store_true', help='If set, creates a file {function_name}.py in a folder gpt_function_review containing the newly edited function code and the old function code. Allowing you to review before replacing the code in the actual file. Either this or edit-code-in-file must be set. Both can be set. Remember to add this folder to .gitignore.')
     parser.add_argument('--edit-code-in-file', action='store_true', help='If set, rewrites the selected function with the newly edited version returned from gpt. If used advisable for code to be commited and saved in case of erroneus changes. Either this or create-review-file must be set. Both can be set.')
 
     args = parser.parse_args()
