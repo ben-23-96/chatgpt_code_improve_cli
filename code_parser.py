@@ -110,6 +110,7 @@ class CodeParser:
     def create_review_code_files(self, new_functions: list):
         # make folder to store created files
         makedirs('gpt_function_review', exist_ok=True)
+        makedirs(f'gpt_function_review/{self.filename[:-3]}', exist_ok=True)
         # create zip of function/method name, the original function code, and the newly edited function code
         functions_zip = zip(self.found_function_names_list, self.found_functions_code_list, new_functions)
         # create list to store the methods for a class if the whole class was provided in as a --target-class
@@ -123,7 +124,7 @@ class CodeParser:
                     classes_name_code_zip_list.append((function_name, new_code))
                     continue
             # write the original code and new code to a file for comparison
-            with open(f'gpt_function_review/{function_name}.py', "w") as f:
+            with open(f'gpt_function_review/{self.filename[:-3]}/{function_name}.py', "w") as f:
                 f.write('##### NEW FUNCTION CODE #####\n\n')
                 f.write(new_code)
                 f.write('\n\n##### ORIGINAL FUNCTION CODE #####\n\n')
@@ -155,7 +156,7 @@ class CodeParser:
             output_str += '\n\n##### ORIGINAL CLASS CODE #####\n\n'
             output_str += original_class_code
             # write original class and new class to file for comparison
-            with open(f'gpt_function_review/{class_name}.py', "w") as f:
+            with open(f'gpt_function_review/{self.filename[:-3]}/{class_name}.py', "w") as f:
                 f.write(output_str)
 
     def remove_not_found(self):
