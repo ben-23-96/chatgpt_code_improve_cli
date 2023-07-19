@@ -1,4 +1,5 @@
 from argparse import ArgumentTypeError
+from os import listdir
 
 class ArgumentValidator:
     def __init__(self, args):
@@ -30,7 +31,7 @@ class ArgumentValidator:
         ArgumentTypeError: If none of the target functions, target methods, or target classes are provided.
     """
         if not self.args.target_functions and not self.args.target_methods and not self.args.target_classes:
-            raise ArgumentTypeError('At least one of --target-functions, --target-methods or target-classes must be provided.')
+            raise ArgumentTypeError('At least one of --target-functions, --target-methods or --target-classes must be provided.')
 
     def check_one_of_review_or_edit_provided(self):
         """
@@ -86,9 +87,33 @@ class ArgumentValidator:
             if not method[0].isupper() or '.' not in method:
                 raise ArgumentTypeError(f"error with method formating for {method}, must be ClassName.method")
 
-    def validate(self):
+    def check_file_folder_exists_review_to_file(self):
         """
-    Validates the input provided to the function.
+    Check if a folder for the filename exists in the gpt_edit_review folder. Used in the review-to-file command.
+
+    Raises:
+        ArgumentTypeError: If the folder for the fiename does not exist.
+    """
+        filename_folder_name = self.args.filename[:-3]
+        if filename_folder_name not in listdir('gpt_edit_review'):
+            raise ArgumentTypeError(f'No folder in gpt_edit_review for filename: {filename_folder_name}. No functions have been edited from the file and placed in the folder for review.')
+        
+    def check_gpt_edit_folder_exists_review_to_file(self):
+        """
+    Check if the gpt_edit_review folder exists. Used in the review-to-file command.
+
+    Raises:
+        ArgumentTypeError: If the gpt_edit_review folder does not exist.
+    """
+        try:
+            listdir('gpt_edit_review')
+        except Exception:
+            raise ArgumentTypeError('Cannot use the review-to-code command as there is no gpt_edit_review folder. No functions have been edited and placed in the folder for review.')
+
+
+    def gpt_edit_validate(self):
+        """
+    Validates the input provided to the function for the gpt_edit command.
     """
         # Check the file type
         self.check_file_type()
@@ -110,3 +135,23 @@ class ArgumentValidator:
     
         # Check if methods are in the correct format
         self.check_method_in_correct_format()
+
+    def review_to_file_validate(self):
+        """Validates the input provided to the function for the gpt_edit command."""
+        # Check the file type
+        self.check_file_type()
+
+        # Check for clash between classes and methods
+        self.check_no_class_and_methods_clash()
+    
+        # Check if methods are in the correct format
+        self.check_method_in_correct_format()
+        
+        # Check if either method, class, function is provided
+        self.check_one_of_method_or_class_or_function_provided()
+
+        # Check if gpt_edit_review_folder_exists
+        self.check_gpt_edit_folder_exists_review_to_file()
+        
+        # Check if a folder exists for the given filename in gpt_edit_review folder
+        self.check_file_folder_exists_review_to_file()
