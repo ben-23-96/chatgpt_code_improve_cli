@@ -1,4 +1,3 @@
-from argparse import ArgumentParser
 from tqdm import tqdm
 from arguement_validator import ArgumentValidator
 from code_parser import CodeParser
@@ -40,6 +39,12 @@ def gpt_edit_function (args):
     code_parser = CodeParser(filename=args.filename, function_names=args.target_functions, class_names=args.target_classes, method_names=args.target_methods)
 
     gpt_request = GptRequest(gpt_4=args.gpt_4)
+
+    try:
+        gpt_request.get_api_key()
+    except Exception as e:
+        print(e)
+        return
     
     # tasks for the terminal progress bar
     total_tasks = 4 + args.create_review_file + args.edit_code_in_file
