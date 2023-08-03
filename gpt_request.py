@@ -1,7 +1,7 @@
 import asyncio
 import aiohttp
 import json
-from os import environ
+from os import path
 from markdown_it import MarkdownIt
 
 class GptRequest:
@@ -14,8 +14,29 @@ class GptRequest:
         self.gpt_4 = gpt_4
         self.temp = temp
         self.prompts = []
-        self.GPT_API_KEY = environ.get("GPT_API_KEY")
+        self.GPT_API_KEY = ""
         self.edited_functions = []
+
+    def get_api_key(self):
+        """
+        Retrieve the OpenAI API key from a configuration file in the user's home directory.
+    
+        Raises:
+            Exception: If the configuration file is not found.
+        """
+    
+        # Define the directory and file path for the configuration file
+        config_dir = path.expanduser('~/.chatgpt_cli/')
+        config_file = path.join(config_dir, 'config.txt')
+    
+        try:
+            # Attempt to open and read the API key from the configuration file
+            with open(config_file, 'r') as f:
+                # set the api_key to the one found in the file
+                self.GPT_API_KEY = f.read().strip()
+        except FileNotFoundError:
+            # If the file is not found, raise an exception instructing the user to set the API key
+            raise Exception('API key not found. Please set your API key using set-api-key command.')
 
     def create_prompts(self, functions: list, refactor: bool = False, comments: bool = False, docstrings: bool = False, error_handling: bool = False):
         """

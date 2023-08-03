@@ -1,8 +1,5 @@
-from argparse import ArgumentParser
-from tqdm import tqdm
 from arguement_validator import ArgumentValidator
 from code_parser import CodeParser
-from gpt_request import GptRequest
 
 def review_to_file_parser(subparsers):
     # set the command name to be used in termainal
