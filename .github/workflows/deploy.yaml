@@ -33,6 +33,11 @@ jobs:
         bump2version patch --tag
         echo "::set-output name=NEW_VERSION::$(cat VERSION)"
 
+    - name: Push changes
+      run: |
+        git push origin HEAD:main
+        git push --tags
+
     - name: Build and deploy
       env:
         TWINE_USERNAME: __token__
