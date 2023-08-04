@@ -23,7 +23,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install GPT cod
 pip install gpt-code-edit
 ```
 
-## Usage
+# Usage
 
 ## Set API Key
 
@@ -33,7 +33,7 @@ First, you need to set your OpenAI API key. You can find your key at [OpenAI Pla
 gpt set-api-key <api_key>
 ```
 
-#### Arguments
+### Arguments
 
 | Argument | Description |
 | :--- | :--- |
@@ -53,7 +53,7 @@ gpt code-edit <filename> [--target-functions <function1> <function2> ...] [--tar
 
 **Note**: One of `--target-functions`, `--target-methods` or `--target-classes` must be set. Multiple can be set at the same time.
 
-#### Example
+### Example
 
 The following command would add gpt generated comments into the function foo located in the main.py file.
 
@@ -61,7 +61,7 @@ The following command would add gpt generated comments into the function foo loc
 gpt code-edit main.py --target-functions foo --comments --edit-code-in-file
 ```
 
-#### Arguments
+### Arguments
 
 | Argument | Description |
 | :--- | :--- |
@@ -86,7 +86,7 @@ If when using code-edit the --create-review-file flag has been used so the edite
 gpt review-to-file <filename> [--target-functions <function1> <function2> ...] [--target-classes <class1> <class2> ...] [--target-methods <class1.method1> <class2.method2> ...]
 ```
 
-#### Arguments
+### Arguments
 
 | Argument | Description |
 | :--- | :--- |
