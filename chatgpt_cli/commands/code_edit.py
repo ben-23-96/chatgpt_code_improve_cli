@@ -1,11 +1,11 @@
 from tqdm import tqdm
-from arguement_validator import ArgumentValidator
-from code_parser import CodeParser
-from gpt_request import GptRequest
+from chatgpt_cli.arguement_validator import ArgumentValidator
+from chatgpt_cli.code_parser import CodeParser
+from chatgpt_cli.gpt_request import GptRequest
 
-def gpt_edit_parser(subparsers):
+def code_edit_parser(subparsers):
     # set the command name to be used in termainal
-    parser = subparsers.add_parser('gpt-edit')
+    parser = subparsers.add_parser('code-edit')
     
     # set the arguments
     parser.add_argument('filename', type=str,
@@ -31,7 +31,7 @@ def gpt_edit_parser(subparsers):
     parser.add_argument('--edit-code-in-file', action='store_true', help='If set, rewrites the selected function with the newly edited version returned from gpt. If used advisable for code to be commited and saved in case of erroneus changes. Either this or create-review-file must be set. Both can be set.')
     return parser
 
-def gpt_edit_function (args):
+def code_edit_function (args):
     
     # create the class instances
     argument_valiadator = ArgumentValidator(args)

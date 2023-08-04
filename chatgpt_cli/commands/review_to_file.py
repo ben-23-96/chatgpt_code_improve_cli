@@ -1,5 +1,5 @@
-from arguement_validator import ArgumentValidator
-from code_parser import CodeParser
+from chatgpt_cli.arguement_validator import ArgumentValidator
+from chatgpt_cli.code_parser import CodeParser
 
 def review_to_file_parser(subparsers):
     # set the command name to be used in termainal

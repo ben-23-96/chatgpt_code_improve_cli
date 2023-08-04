@@ -4,10 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-aiohttp = "*"
-markdown-it-py = "*"
-redbaron = "*"
-tqdm = "*"
+aiohttp = "3.8.4"
+markdown-it-py = "3.0.0"
+redbaron = "0.9.2"
+tqdm = "4.65.0"
 
 [dev-packages]
 
