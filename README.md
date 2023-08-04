@@ -51,6 +51,16 @@ gpt code-edit <filename> [--target-functions <function1> <function2> ...] [--tar
 
 **Note**: One of `--refactor`, `--comments`, `--docstrings` or `--error-handling` must be set. Multiple can be set at the same time.
 
+**Note**: One of `--target-functions`, `--target-methods` or `--target-classes` must be set. Multiple can be set at the same time.
+
+## Example
+
+The following command would add gpt generated comments into the function foo located in the main.py file.
+
+```bash
+gpt code-edit main.py --target-functions foo --comments --edit-code-in-file
+```
+
 #### Arguments
 
 | Argument | Description |
