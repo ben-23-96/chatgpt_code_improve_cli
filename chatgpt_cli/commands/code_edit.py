@@ -1,7 +1,7 @@
 from tqdm import tqdm
-from chatgpt_cli.arguement_validator import ArgumentValidator
-from chatgpt_cli.code_parser import CodeParser
-from chatgpt_cli.gpt_request import GptRequest
+from ..arguement_validator import ArgumentValidator
+from ..code_parser import CodeParser
+from ..gpt_request import GptRequest
 
 def code_edit_parser(subparsers):
     # set the command name to be used in termainal

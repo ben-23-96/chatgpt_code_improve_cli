@@ -1,5 +1,5 @@
-from chatgpt_cli.arguement_validator import ArgumentValidator
-from chatgpt_cli.code_parser import CodeParser
+from ..arguement_validator import ArgumentValidator
+from ..code_parser import CodeParser
 
 def review_to_file_parser(subparsers):
     # set the command name to be used in termainal
@@ -7,7 +7,7 @@ def review_to_file_parser(subparsers):
     
     # set the arguments
     parser.add_argument('filename', type=str,
-                        help='The filename of the file containing the code. eg. main.py')
+                        help='The filename of the file containing the original code. eg. main.py')
     parser.add_argument('--target-functions', type=str, nargs='*', default=[],
                         help='A space-separated list of function names to be targeted from the corresponding gpt_edit_review/filename folder.')
     parser.add_argument('--target-classes', type=str, nargs='*', default=[],

@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
-from chatgpt_cli.commands.code_edit import code_edit_parser, code_edit_function
-from chatgpt_cli.commands.review_to_file import review_to_file_parser, review_to_file_function
-from chatgpt_cli.commands.set_api_key import set_api_key_parser, set_api_key_function
+from .commands.code_edit import code_edit_parser, code_edit_function
+from .commands.review_to_file import review_to_file_parser, review_to_file_function
+from .commands.set_api_key import set_api_key_parser, set_api_key_function
 
 
 def main():
