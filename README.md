@@ -55,7 +55,7 @@ gpt code-edit <filename> [--target-functions <function1> <function2> ...] [--tar
 
 ### Example
 
-The following command would add gpt generated comments into the function foo located in the main.py file.
+The following command would add GPT generated comments into the function foo located in the main.py file.
 
 ```bash
 gpt code-edit main.py --target-functions foo --comments --edit-code-in-file
