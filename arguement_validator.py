@@ -21,7 +21,7 @@ class ArgumentValidator:
     
         # if the file type is not '.py' raise a error
         if file_type != 'py':
-            raise ArgumentTypeError('Invalid file type. Only Python (.py) files are allowed.')
+            raise ArgumentTypeError('\nInvalid file type. Only Python (.py) files are allowed.')
 
     def check_one_of_method_or_class_or_function_provided(self):
         """
@@ -31,7 +31,7 @@ class ArgumentValidator:
         ArgumentTypeError: If none of the target functions, target methods, or target classes are provided.
     """
         if not self.args.target_functions and not self.args.target_methods and not self.args.target_classes:
-            raise ArgumentTypeError('At least one of --target-functions, --target-methods or --target-classes must be provided.')
+            raise ArgumentTypeError('\nAt least one of --target-functions, --target-methods or --target-classes must be provided.')
 
     def check_one_of_review_or_edit_provided(self):
         """
@@ -39,7 +39,7 @@ class ArgumentValidator:
     Raises an ArgumentTypeError if neither option is set.
     """
         if not self.args.create_review_file and not self.args.edit_code_in_file:
-            raise ArgumentTypeError('Either --create-review-file or --edit-code-in-file must be set. Both can be set.')
+            raise ArgumentTypeError('\nEither --create-review-file or --edit-code-in-file must be set. Both can be set.')
 
     def check_one_of_refactor_or_comments_or_docstrings_or_error_handling_provided(self):
         """
@@ -49,7 +49,7 @@ class ArgumentValidator:
         ArgumentTypeError: If none of the options are provided.
     """
         if not self.args.refactor and not self.args.comments and not self.args.docstrings and not self.args.error_handling:
-            raise ArgumentTypeError('At least one of --refactor, --comments, --docstrings, --error-handling must be provided.')
+            raise ArgumentTypeError('\nAt least one of --refactor, --comments, --docstrings, --error-handling must be provided.')
 
     def check_no_class_and_methods_clash(self):
         """
@@ -61,7 +61,7 @@ class ArgumentValidator:
     
         # raise a error if there is any intersection between the target classes and method classes
         if bool(set(self.args.target_classes) & set(method_classes)):
-            raise ArgumentTypeError(f'Cannot provide --target-methods and --target-classes that contain the same class.\nTarget methods: {self.args.target_methods}\nTarget classes: {self.args.target_classes}')
+            raise ArgumentTypeError(f'\nCannot provide --target-methods and --target-classes that contain the same class.\nTarget methods: {self.args.target_methods}\nTarget classes: {self.args.target_classes}')
 
     def check_temp_range(self):
         """
@@ -71,7 +71,7 @@ class ArgumentValidator:
         ArgumentTypeError: If the temperature value is not between 0 and 1.
     """
         if self.args.temp < 0 or self.args.temp > 1:
-            raise ArgumentTypeError("temp must be between 0 and 1.")
+            raise ArgumentTypeError("\ntemp must be between 0 and 1.")
 
     def check_method_in_correct_format (self):
         """
@@ -85,7 +85,20 @@ class ArgumentValidator:
         for method in self.args.target_methods:
             # Check if the first character of the method is not uppercase or if there is no dot in the method
             if not method[0].isupper() or '.' not in method:
-                raise ArgumentTypeError(f"error with method formating for {method}, must be ClassName.method")
+                raise ArgumentTypeError(f"\nerror with method formating for {method}, must be ClassName.method")
+
+    def check_file_exists (self):
+        """
+        Check if the filename provided by the user can be opened.
+
+        Raises:
+            FileNotFoundError: If the filename provided cannot be opened.
+        """
+        try:
+            with open(self.args.filename, 'r') as file:
+                pass
+        except FileNotFoundError as e:
+            raise FileNotFoundError(f'\nCannot find the file: {self.args.filename}')
 
     def check_file_folder_exists_review_to_file(self):
         """
@@ -96,7 +109,7 @@ class ArgumentValidator:
     """
         filename_folder_name = self.args.filename[:-3]
         if filename_folder_name not in listdir('gpt_edit_review'):
-            raise ArgumentTypeError(f'No folder in gpt_edit_review for filename: {filename_folder_name}. No functions have been edited from the file and placed in the folder for review.')
+            raise ArgumentTypeError(f'\nNo folder in gpt_edit_review for filename: {filename_folder_name}. No functions have been edited from the file and placed in the folder for review.')
         
     def check_gpt_edit_folder_exists_review_to_file(self):
         """
@@ -108,7 +121,7 @@ class ArgumentValidator:
         try:
             listdir('gpt_edit_review')
         except Exception:
-            raise ArgumentTypeError('Cannot use the review-to-code command as there is no gpt_edit_review folder. No functions have been edited and placed in the folder for review.')
+            raise ArgumentTypeError('\nCannot use the review-to-code command as there is no gpt_edit_review folder. No functions have been edited and placed in the folder for review.')
 
 
     def gpt_edit_validate(self):
@@ -117,6 +130,9 @@ class ArgumentValidator:
     """
         # Check the file type
         self.check_file_type()
+
+        # Check the file exists
+        self.check_file_exists()
     
         # Check if either method, class, or function is provided
         self.check_one_of_method_or_class_or_function_provided()
