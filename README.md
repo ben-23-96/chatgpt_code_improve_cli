@@ -25,7 +25,7 @@ pip install gpt-code-edit
 
 ## Usage
 
-### Set API Key
+## Set API Key
 
 First, you need to set your OpenAI API key. You can find your key at [OpenAI Platform](https://platform.openai.com/account/api-keys) if you have a valid OpenAI account.
 
@@ -39,7 +39,7 @@ gpt set-api-key <api_key>
 | :--- | :--- |
 | `<api_key>` | The OpenAI API key for the user. |
 
-### Code Edit
+## Code Edit
 
 This command allows you to target specific functions, classes, or methods in a file and perform several edits on the code including refactoring, adding comments, adding docstrings, or adding error handling.
 
@@ -53,7 +53,7 @@ gpt code-edit <filename> [--target-functions <function1> <function2> ...] [--tar
 
 **Note**: One of `--target-functions`, `--target-methods` or `--target-classes` must be set. Multiple can be set at the same time.
 
-## Example
+#### Example
 
 The following command would add gpt generated comments into the function foo located in the main.py file.
 
@@ -78,7 +78,7 @@ gpt code-edit main.py --target-functions foo --comments --edit-code-in-file
 | `--create-review-file` | If set, creates a file `{function_name}.py` in a folder `gpt_edit_review` containing the newly edited function code and the old function code. This allows you to review the code before replacing it in the actual file. Remember to gitignore or delete the folder created when done. |
 | `--edit-code-in-file` | If set, rewrites the selected code within the file with the newly edited version returned from GPT. If used, it is advisable for code to be committed and saved in case of erroneous changes. |
 
-### Review to File
+## Review to File
 
 If when using code-edit the --create-review-file flag has been used so the edited code has been placed in a file for review, this command allows you to apply the changes to the actual file.
 
