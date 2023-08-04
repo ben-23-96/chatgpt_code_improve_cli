@@ -3,3 +3,6 @@ __pycache__
 .env
 test.py
 test_2.py
+dist
+gpt_code_edit.egg-info
+build

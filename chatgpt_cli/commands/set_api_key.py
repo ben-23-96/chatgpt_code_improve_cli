@@ -18,7 +18,7 @@ def set_api_key_function(args):
     api_key = args.api_key
     
     # Define the directory and file path for the configuration file
-    config_dir = path.expanduser('~/.chatgpt_cli/')
+    config_dir = path.expanduser('~/.gpt_code_edit/')
     config_file = path.join(config_dir, 'config.txt')
     
     # Create the configuration directory if it doesn't exist
