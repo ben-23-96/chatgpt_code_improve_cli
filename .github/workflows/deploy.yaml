@@ -22,6 +22,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install bump2version twine
 
+    - name: Set up Git user
+      run: |
+        git config user.email ${{ secrets.EMAIL }}
+        git config user.name ${{ secrets.USERNAME }}
+
     - name: Bump version
       id: bump-version
       run: |
